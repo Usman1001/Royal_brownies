@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Brownies</title>
+    <style>
+        /* --- CSS STYLES (THEME) --- */
+        :root {
+            /* Brown/Gold Palette based on logo */
+            --bg-color: #1a100a; /* Very dark chocolate brown */
+            --text-gold: #c5a059; /* Metallic gold from logo */
+            --accent-gold: #ffecb3; /* Lighter cream/gold for highlights */
+            --text-white: #fafafa;
+            --bg-dark: #120c08;
+            --chocolate: #2a1b11;
+            --gold: #c5a059;
+            --gold-bright: #ffecb3;
+            --white: #ffffff;
+            
+            /* Section padding */
+            --section-pad: 4rem 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif; /* Elegant, classic font */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            overflow-x: hidden; /* Crucial for the slider */
+            scroll-behavior: smooth;
+        }
+
+        /* --- LOGO SECTION --- */
+        header {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-bottom: 2px solid var(--text-gold);
+            position: relative;
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            color: var(--text-gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            display: inline-block;
+        }
+
+        .logo-subtext {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            margin-top: -5px;
+        }
+
+        /* Crown simulation below text */
+        .header-decoration {
+            margin-top: 0.5rem;
+            color: var(--text-gold);
+            font-size: 1.2rem;
+        }
+
+        /* --- DYNAMIC BROWNIE SLIDER --- */
+        .product-section {
+            padding: var(--section-pad);
+            text-align: center;
+        }
+
+        .section-title {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .slider-container {
+            width: 100%;
+            overflow: hidden; /* Hide overflowing images */
+            position: relative;
+            background: rgba(255,255,255,0.05); /* Subtle highlight */
+            border-radius: 10px;
+            padding: 1rem 0;
+        }
+
+        .slider-track {
+            display: flex;
+            /* This width handles any number of items added */
+            width: max-content; 
+            animation: scroll 30s linear infinite; 
+        }
+
+        .slider-item {
+            width: 250px; /* Width of individual items */
+            flex-shrink: 0;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Styling the placeholder "fake" images */
+        .slider-item .image-placeholder {
+            width: 100%;
+            height: 180px;
+            background: #2a1b11; /* Slightly lighter brown than background */
+            border: 2px solid var(--text-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            font-style: italic;
+            position: relative;
+        }
+
+        /* Add a subtle shine effect */
+        .slider-item .image-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 100%);
+        }
+
+        .slider-item h3 {
+            font-size: 1rem;
+            color: var(--text-white);
+            font-weight: 300;
+        }
+
+        /* The Animation - Moves left by half the total width (since we cloned the items via JS) */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
+        }
+
+
+        /* --- Client Reviews Section --- */
+        .reviews-section {
+            padding: 5rem 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            text-align: center;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 3rem;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .review-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .quote {
+            font-style: italic;
+            line-height: 1.6;
+            color: #d1d1d1;
+        }
+
+
+
+        /* --- BUTTONS & FOOTER --- */
+        .cta-section {
+            padding: var(--section-pad);
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+        }
+
+        /* Instagram Button - Multi-colored gradient */
+        .btn-insta {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-insta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(220, 39, 67, 0.4);
+        }
+
+        /* WhatsApp Button - Official Green */
+        .btn-wa {
+            background-color: #25D366;
+            color: #000; /* Black text for visibility on green */
+            border: none;
+        }
+
+        .btn-wa:hover {
+            background-color: #1ebe5d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        footer {
+            background-color: rgba(0,0,0,0.3);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            border-top: 1px solid var(--text-gold);
+        }
+
+        /* --- JAVASCRIPT --- */
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-text">Royal</div>
+        <div class="logo-subtext">B R O W N I E S</div>
+        <div class="header-decoration">&#9819;</div> </header>
+
+    <section class="product-section">
+        <h2 class="section-title">Our Signature Creations</h2>
+        <div class="slider-container">
+            <div class="slider-track" id="sliderTrack">
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/tower-brownie.jpg" alt="Towering Brownie">
+                    <h3>Towering Brownie</h3>
+                </div>
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/brownie-tub.jpg" alt="Brownie Tub with choco chips">
+                    <h3>Brownie Tub</h3>
+                </div>
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/customized-brownie.jpg" alt="Customized Brownie">
+                    <h3>Customized Brownie</h3>
+                </div>
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/customized-brownie-slab-1.jpg" alt="Customized Brownie Slab">
+                    <h3>Customized Brownie Slab</h3>
+                </div>
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/customized-brownie-slab-sprinkles.jpg" alt="Customized Brownie Slab with sprinkles">
+                    <h3>Customized Brownie Slab with sprinkles</h3>
+                </div>
+
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/customized-brownie-slab-2.jpg" alt="Customized Brownie Slab">
+                    <h3>Customized Brownie Slab</h3>
+                </div>
+                <div class="slider-item">
+                    <img class="image-placeholder" src="images/brownie-with-peanuts.jpg" alt="Brownie with peanuts">
+                    <h3>Brownie with Peanuts</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <h2 class="section-heading">Client Reviews</h2>
+        <div class="review-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"The Brownies are amazing!, My friends said they were the best!. Looking forward to but more! &#128523;"</p>
+                <p style="margin-top:10px; font-size: 0.8rem; color: var(--gold);">— SatisfiedCustomer  </p>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"Jazakallah khair &#129293; your brownie were so good really yummy &#128523; and absolutey perfect &#128524;&#128157;"</p>
+                <p style="margin-top:10px; font-size: 0.8rem; color: var(--gold);">— Happy Customer</p>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"The flavor was really nice and soft. The texture was perfect. I'm really impressed and will definitely order again in'sha Allah &#128157;."</p>
+                <p style="margin-top:10px; font-size: 0.8rem; color: var(--gold);">— Verified Customer</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="cta-section">
+        <h2 style="margin-bottom: 1.5rem; color: var(--accent-gold); font-weight: 300;">Order your taste of luxury.</h2>
+        
+        <a href="https://www.instagram.com/royalbrowniesbadhulla?igsh=MTdxNWdxazJtdDg2aw%3D%3D&utm_source=qr" class="btn btn-insta" target="_blank" rel="noopener noreferrer">
+            Follow on Instagram
+        </a>
+
+        <a href="https://chat.whatsapp.com/JJ9IWZWQjx0E6eNV9sCth5?mode=gi_t" class="btn btn-wa" id="wa-button" target="_blank" rel="noopener noreferrer">
+            Join WhatsApp Group
+        </a>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Royal Brownies. Created with care for your sweetness.</p>
+    </footer>
+
+    <script>
+        /* --- JAVASCRIPT --- */
+
+        // 1. Auto-update the year in the footer
+        const yearSpan = document.getElementById('year');
+        yearSpan.textContent = new Date().getFullYear();
+
+        // 2. Automated Infinite Loop Logic
+        const sliderTrack = document.getElementById('sliderTrack');
+        const originalItems = sliderTrack.innerHTML;
+
+        // We double the content in the track so the "scroll" has enough width to loop seamlessly
+        sliderTrack.innerHTML = originalItems + originalItems;
+
+        // 3. Prevent opening placeholder links with a warning
+        const instaBtn = document.querySelector('.btn-insta');
+        const waBtn = document.getElementById('wa-button');
+
+        function checkLink(event, button) {
+            if (button.getAttribute('href') === '#') {
+                event.preventDefault(); // Stop the link from opening
+                alert("Please add the correct link in the HTML code (replace the '#' in the href attribute for this button).");
+            }
+        }
+
+        instaBtn.addEventListener('click', function(event) { checkLink(event, instaBtn); });
+        waBtn.addEventListener('click', function(event) { checkLink(event, waBtn); });
+
+    </script>
+
+</body>
+</html>
